@@ -52,6 +52,20 @@
             margin-top: 3rem;
         }
 
+        /* Ambas secciones llevan los 90px de padding del tema, así que se
+           acumulan ~180px de vacío entre el timeline y "Acerca de mí". */
+        #section-resume {
+            padding-bottom: 20px;
+        }
+
+        #section-about {
+            padding-top: 40px;
+        }
+
+        #section-resume .d_timeline-item:last-child .d_timeline-text {
+            padding-bottom: 10px;
+        }
+
         /* Oculto por encima de 767px; el degradado va en ::before, anclado al
            borde superior de esta caja, así que no puede haber margen entre
            ambos (por eso el espacio es padding-top y no margin-top). */
@@ -98,11 +112,10 @@
                 line-height: 1.6;
             }
 
-            /* Estas imágenes llevan un segundo atributo class, así que el
-               parser descarta su img-fluid y el logo de 400px se desborda. */
-            #section-resume img {
-                max-width: 100%;
-                height: auto;
+            /* Los 3rem de margen alrededor de la foto de la universidad la
+               empujan fuera de la pantalla por estrecha que sea la imagen. */
+            #section-resume .m-5 {
+                margin: 0 !important;
             }
 
             #hero p,
@@ -142,6 +155,52 @@
 
             #section-portfolio .card-image-1.mod-d h5 {
                 font-size: 12px;
+            }
+
+            /* "A qué me dedico": tres tarjetas pensadas para una fila de
+               escritorio, con 40px de padding interno y un icono de 40px,
+               apiladas ahora en una sola columna. */
+            #section-services {
+                padding-top: 45px;
+            }
+
+            #section-services .spacer-single {
+                height: 15px;
+            }
+
+            #section-services .space-border {
+                margin-bottom: 20px;
+            }
+
+            #section-services .de_3d-box .d-inner {
+                padding: 22px 15px;
+            }
+
+            #section-services .de_3d-box i {
+                font-size: 28px;
+                top: 24px;
+                left: 15px;
+            }
+
+            #section-services .de_3d-box h3 {
+                margin-left: 44px;
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+
+            #section-services .de_3d-box .text {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            /* Saltos de línea que solo igualan la altura en escritorio. */
+            #section-services .de_3d-box .text br {
+                display: none;
+            }
+
+            h2 {
+                font-size: 26px;
+                line-height: 32px;
             }
         }
     </style>
@@ -596,8 +655,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">febrero 2024 - julio 2024</h3>
                                         <a href="https://boxxrd.com/" target="_blank">
-                                            <img class="mt-3 ml-5" src="images/experience/boxx.png"
-                                                style="max-width: 200px;" class="img-fluid" alt="">
+                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/boxx.png"
+                                                style="max-width: 200px;" alt="">
                                         </a>
                                         <p class="d_timeline-text" style="text-align: justify;"><span
                                                 class="d_title">Content Creator</span>
@@ -615,8 +674,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">octubre 2024 - ahora</h3>
                                         <a href="https://www.timbal.do/" target="_blank">
-                                            <img class="mt-3 ml-5" src="images/experience/timbal.png"
-                                                style="max-width: 200px;" class="img-fluid" alt="">
+                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/timbal.png"
+                                                style="max-width: 200px;" alt="">
                                         </a>
                                         <p class="d_timeline-text" style="text-align: justify;"><span
                                                 class="d_title">Community Manager Freelance</span>
@@ -646,8 +705,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">2022 - 2026</h3>
                                         <a class="m-5" href="https://www.utesa.edu/" target="_blank">
-                                            <img class="mt-2" src="images/experience/utesa-school.jpeg"
-                                                style="max-width: 400px; border-radius: 10px;" class="img-fluid" alt="">
+                                            <img class="mt-2 img-fluid" src="images/experience/utesa-school.jpeg"
+                                                style="width: 400px; max-width: 100%; border-radius: 10px;" alt="">
                                         </a>
                                         <div class="d_timeline-text" style="text-align: justify;">
                                             <span class="d_title">Grado en Mercadeo</span>

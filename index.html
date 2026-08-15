@@ -51,6 +51,20 @@
             margin-top: 3rem;
         }
 
+        /* Both sections carry the theme's 90px of section padding, so ~180px of
+           blank space piles up between the timeline and "À propos de moi". */
+        #section-resume {
+            padding-bottom: 20px;
+        }
+
+        #section-about {
+            padding-top: 40px;
+        }
+
+        #section-resume .d_timeline-item:last-child .d_timeline-text {
+            padding-bottom: 10px;
+        }
+
         /* Hidden above 767px; the fade sits in ::before, anchored to this box's
            top edge, so no padding-collapsing margin may separate the two. */
         .gallery-more {
@@ -96,11 +110,10 @@
                 line-height: 1.6;
             }
 
-            /* These images carry a second class attribute, so the img-fluid on
-               it is dropped by the parser and the 400px logo can overflow. */
-            #section-resume img {
-                max-width: 100%;
-                height: auto;
+            /* 3rem of margin around the university photo pushes it past the
+               edge however narrow the image itself is allowed to get. */
+            #section-resume .m-5 {
+                margin: 0 !important;
             }
 
             #hero p,
@@ -140,6 +153,51 @@
 
             #section-portfolio .card-image-1.mod-d h5 {
                 font-size: 12px;
+            }
+
+            /* "Ce que je fais": three cards built for a desktop row, each with
+               40px of inner padding and a 40px icon, stacked into one column. */
+            #section-services {
+                padding-top: 45px;
+            }
+
+            #section-services .spacer-single {
+                height: 15px;
+            }
+
+            #section-services .space-border {
+                margin-bottom: 20px;
+            }
+
+            #section-services .de_3d-box .d-inner {
+                padding: 22px 15px;
+            }
+
+            #section-services .de_3d-box i {
+                font-size: 28px;
+                top: 24px;
+                left: 15px;
+            }
+
+            #section-services .de_3d-box h3 {
+                margin-left: 44px;
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+
+            #section-services .de_3d-box .text {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            /* Line breaks that only exist to even out the desktop card heights. */
+            #section-services .de_3d-box .text br {
+                display: none;
+            }
+
+            h2 {
+                font-size: 26px;
+                line-height: 32px;
             }
         }
     </style>
@@ -348,7 +406,7 @@
                             <p class="mb-4"
                                 style="max-width: 600px; margin: 0 auto; color: #707070; font-size: 16px; line-height: 1.6;">
                                 Cette vidéo est un exemple de contenu pour lequel j'ai été en charge de la
-                                <strong>définition du décor</strong> et j'ai participé activement à la <strong>journée de
+                                <strong>définition du scénario</strong> et j'ai participé activement à la <strong>journée de
                                     tournage</strong> aux côtés de l'équipe technique.
                             </p>
 
@@ -594,8 +652,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">février 2024 - juillet 2024</h3>
                                         <a href="https://boxxrd.com/" target="_blank">
-                                            <img class="mt-3 ml-5" src="images/experience/boxx.png"
-                                                style="max-width: 200px;" class="img-fluid" alt="">
+                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/boxx.png"
+                                                style="max-width: 200px;" alt="">
                                         </a>
                                         <p class="d_timeline-text" style="text-align: justify;"><span
                                                 class="d_title">Content Creator</span>
@@ -614,8 +672,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">octobre 2024 - aujourd'hui</h3>
                                         <a href="https://www.timbal.do/" target="_blank">
-                                            <img class="mt-3 ml-5" src="images/experience/timbal.png"
-                                                style="max-width: 200px;" class="img-fluid" alt="">
+                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/timbal.png"
+                                                style="max-width: 200px;" alt="">
                                         </a>
                                         <p class="d_timeline-text" style="text-align: justify;"><span
                                                 class="d_title">Community Manager Freelance</span>
@@ -646,8 +704,8 @@
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">2022 - 2026</h3>
                                         <a class="m-5" href="https://www.utesa.edu/" target="_blank">
-                                            <img class="mt-2" src="images/experience/utesa-school.jpeg"
-                                                style="max-width: 400px; border-radius: 10px;" class="img-fluid" alt="">
+                                            <img class="mt-2 img-fluid" src="images/experience/utesa-school.jpeg"
+                                                style="width: 400px; max-width: 100%; border-radius: 10px;" alt="">
                                         </a>
                                         <div class="d_timeline-text" style="text-align: justify;">
                                             <span class="d_title">Licence en Marketing</span>
