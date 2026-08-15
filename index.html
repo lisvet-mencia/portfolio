@@ -20,6 +20,18 @@
             --primary-color: #CB7C6F;
             --primary-color-rgb: 203, 124, 111;
         }
+
+        /* The typed job title sits on its own line and never wraps: a script
+           shrinks the font of each title until it fits, so a long one can't
+           push the page down. The row keeps one line of height throughout. */
+        .typed-title {
+            --typed-max-size: 40px;
+            display: flex;
+            align-items: center;
+            height: calc(var(--typed-max-size) * 1.2);
+            line-height: 1.2;
+            white-space: nowrap;
+        }
     </style>
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
 </head>
@@ -98,13 +110,15 @@
                         <div class="col-md-5">
                             <div class="spacer-10"></div>
                             <div class="h1 wow fadeInUp .medium-screen" style="font-size: 40px;" data-wow-delay=".6s">
-                                Bonjour, je suis <span class="id-color">Lisvet Mencia</span><br> Je suis
+                                Bonjour, je suis <span class="id-color">Lisvet Mencia</span>. Je suis
                                 <div class="typed-strings">
                                     <p>Responsable des réseaux sociaux</p>
                                     <p>Community Manager</p>
                                     <p>Créatrice de contenu</p>
                                 </div>
-                                <div class="typed"></div>
+                                <div class="typed-title">
+                                    <span class="typed"></span>
+                                </div>
                             </div>
                             <p style="text-align: justify; line-height: 1.5;" class="wow fadeInUp" data-wow-delay=".6s">
                                 Professionnelle du marketing passionnée par la création de contenu et la gestion de
@@ -682,6 +696,55 @@
     <script>
         jQuery(document).ready(function () {
             $(function () {
+                // The job titles differ a lot in length. Each one gets its own
+                // font size so it always fits on a single line, which keeps the
+                // typing animation from wrapping and shoving the page down.
+                var line = document.querySelector('.typed-title');
+                var titles = [].map.call(
+                    document.querySelectorAll('.typed-strings p'),
+                    function (p) { return p.textContent; }
+                );
+                var maxSize = parseFloat(getComputedStyle(line).getPropertyValue('--typed-max-size')) || 40;
+                var minSize = 14;
+                var sizes = [];
+                var current = 0;
+
+                // Off-flow copy used to measure a title at the largest size.
+                var ruler = document.createElement('span');
+                ruler.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+                line.appendChild(ruler);
+
+                function measure() {
+                    // Leave room for the blinking cursor the plugin appends.
+                    var available = line.clientWidth - maxSize * 0.4;
+                    ruler.style.fontSize = maxSize + 'px';
+                    sizes = titles.map(function (title) {
+                        ruler.textContent = title;
+                        var natural = ruler.offsetWidth;
+                        if (natural <= available) return maxSize;
+                        return Math.max(minSize, Math.floor(maxSize * available / natural));
+                    });
+                    // Never reserve more height than the biggest title needs.
+                    line.style.height = (Math.max.apply(null, sizes) * 1.2) + 'px';
+                }
+
+                function fit(index) {
+                    current = index;
+                    line.style.fontSize = sizes[index] + 'px';
+                }
+
+                function refresh() {
+                    measure();
+                    fit(current);
+                }
+
+                refresh();
+                window.addEventListener('resize', refresh);
+                // Web fonts can land after the first measurement.
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(refresh);
+                }
+
                 // jquery typed plugin
                 $(".typed").typed({
                     stringsElement: $('.typed-strings'),
@@ -691,6 +754,7 @@
                     contentType: 'html', // or text
                     // defaults to false for infinite loop
                     loopCount: false,
+                    preStringTyped: fit,
                     callback: function () { null; },
                     resetCallback: function () { newTyped(); }
                 });
