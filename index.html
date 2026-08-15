@@ -3,7 +3,8 @@
 
 <head>
     <title>Lisvet - Portfolio</title>
-    <link rel="icon" href="images/logo/R.png" type="image/gif" sizes="16x16">
+    <link rel="icon" href="images/logo/R.png" type="image/png" sizes="any">
+    <link rel="icon" href="images/logo/favicon.svg" type="image/svg+xml">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="Kyros - Personal Website" name="description" />
@@ -31,6 +32,42 @@
             height: calc(var(--typed-max-size) * 1.2);
             line-height: 1.2;
             white-space: nowrap;
+        }
+
+        /* The mobile bar holds nothing but the menu button, so the theme's 90px
+           is far too tall. designesia.js collapses the header back to a
+           hard-coded 90px inline height after the menu closes, so the closed
+           state needs !important — gated on .menu-open so the open/close
+           animation is left alone. .header-mobile only exists below 993px. */
+        header.header-mobile:not(.menu-open) {
+            height: 60px !important;
+        }
+
+        header.header-mobile #mainmenu {
+            top: 60px;
+        }
+
+        .hero-cta {
+            margin-top: 3rem;
+        }
+
+        @media only screen and (max-width: 767px) {
+
+            /* Sit the hero just under the shortened bar instead of clearing
+               the old 90px header plus the container's 3rem margin. */
+            #hero {
+                padding-top: 75px;
+            }
+
+            #hero .container {
+                margin-top: 0 !important;
+            }
+
+            .hero-cta {
+                margin-top: 12px;
+                margin-bottom: 35px;
+                text-align: center;
+            }
         }
     </style>
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
@@ -103,7 +140,8 @@
             </div>
             <!-- load external content close -->
 
-            <section aria-label="section" class="jarallax no-top-md no-bottom sm-pt-120 overflow-hidden">
+            <section id="hero" aria-label="section"
+                class="jarallax no-top-md no-bottom sm-pt-120 overflow-hidden">
                 <img src="images/background/l5.jpg" class="jarallax-img" alt="">
                 <div class="container mt-5">
                     <div class="row align-items-center">
@@ -149,11 +187,13 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a class="btn btn-main wow fadeInUp mt-5"
-                                style="z-index: 10; padding: 15px 35px; border-radius: 30px; display: inline-flex; align-items: center;"
-                                data-wow-delay=".6s" href="pdf/CV.pdf" download target="_blank">
-                                <i class="fa fa-download" style="margin-right: 10px;"></i> Télécharger le CV
-                            </a>
+                            <div class="hero-cta">
+                                <a class="btn btn-main wow fadeInUp"
+                                    style="z-index: 10; padding: 15px 35px; border-radius: 30px; display: inline-flex; align-items: center;"
+                                    data-wow-delay=".6s" href="pdf/CV.pdf" download target="_blank">
+                                    <i class="fa fa-download" style="margin-right: 10px;"></i> Télécharger le CV
+                                </a>
+                            </div>
                         </div>
                         <div class="col-md-6 offset-md-1 jarallax">
                             <img src="images/misc/rosalia1.png" class="img-fluid wow fadeInUp" data-wow-delay=".8s"
@@ -757,6 +797,21 @@
                     preStringTyped: fit,
                     callback: function () { null; },
                     resetCallback: function () { newTyped(); }
+                });
+
+                // designesia.js reveals the mobile menu by animating the header
+                // height, then collapses it to a hard-coded 90px. Mark the open
+                // state so the CSS only clamps the bar once it is shut again,
+                // and wait out the 200ms close animation before clamping.
+                var header = document.querySelector('header');
+                $('#menu-btn').on('click', function () {
+                    if (header.classList.contains('menu-open')) {
+                        setTimeout(function () {
+                            header.classList.remove('menu-open');
+                        }, 250);
+                    } else {
+                        header.classList.add('menu-open');
+                    }
                 });
             });
         });
