@@ -3,7 +3,7 @@
 
 <head>
     <title>Lisvet - Portfolio</title>
-    <link rel="icon" href="images/logo/R.png" type="image/png" sizes="any">
+    <link rel="icon" href="images/logo/L.png" type="image/png" sizes="any">
     <link rel="icon" href="images/logo/favicon.svg" type="image/svg+xml">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -51,6 +51,15 @@
             margin-top: 3rem;
         }
 
+        /* Hidden above 767px; the fade sits in ::before, anchored to this box's
+           top edge, so no padding-collapsing margin may separate the two. */
+        .gallery-more {
+            display: none;
+            position: relative;
+            padding-top: 25px;
+            text-align: center;
+        }
+
         @media only screen and (max-width: 767px) {
 
             /* Sit the hero just under the shortened bar instead of clearing
@@ -67,6 +76,70 @@
                 margin-top: 12px;
                 margin-bottom: 35px;
                 text-align: center;
+            }
+
+            /* The résumé indents stack up to ~100px on a phone (container +
+               .p-4 + the timeline rule + the text's own 40px), which squeezes
+               the copy into a sliver. Justified text then opens huge gaps. */
+            #section-resume .p-4 {
+                padding: .5rem !important;
+            }
+
+            #section-resume .s_border {
+                font-size: 20px;
+            }
+
+            #section-resume .d_timeline-text {
+                padding-left: 15px;
+                padding-bottom: 25px;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            /* These images carry a second class attribute, so the img-fluid on
+               it is dropped by the parser and the 400px logo can overflow. */
+            #section-resume img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            #hero p,
+            #section-resume .d_timeline-text,
+            #section-about p {
+                text-align: left !important;
+            }
+
+            /* Two cards per row, collapsed to the first rows until asked. */
+            #gallery.is-clamped {
+                overflow: hidden;
+            }
+
+            .gallery-more {
+                display: block;
+            }
+
+            .gallery-more::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 100%;
+                height: 90px;
+                background: linear-gradient(rgba(255, 255, 255, 0), #fff);
+                pointer-events: none;
+            }
+
+            #gallery:not(.is-clamped)+.gallery-more::before {
+                display: none;
+            }
+
+            /* The card overlay was sized for a third of a desktop row. */
+            #section-portfolio .card-image-1.mod-d h3 {
+                font-size: 15px;
+            }
+
+            #section-portfolio .card-image-1.mod-d h5 {
+                font-size: 12px;
             }
         }
     </style>
@@ -208,7 +281,7 @@
                 </a>
                 <div class="de-gradient-edge-bottom"></div>
             </section>
-            <section id="section-services mt-5" class="no-bottom">
+            <section id="section-services" class="no-bottom mt-5">
                 <div class="container relative">
                     <div class="row">
                         <div class="col-md-12 text-center wow fadeInUp">
@@ -347,7 +420,7 @@
                         </div>
                     </div>
                     <div id="gallery" class="row sequence">
-                        <a class="col-md-4 item" href="https://www.instagram.com/maseratird/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/maseratird/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -360,7 +433,7 @@
                         </a>
 
                         <!-- BOXX -->
-                        <a class="col-md-4 item" href="https://www.instagram.com/cedensa_rd" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/cedensa_rd" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -371,7 +444,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/actuaasesores" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/actuaasesores" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -382,7 +455,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/komatsu.reidyco/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/komatsu.reidyco/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -393,7 +466,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/cc.cateringrd/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/cc.cateringrd/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -404,7 +477,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/utihotel/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/utihotel/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -415,7 +488,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/cerebrospoliticos/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/cerebrospoliticos/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -426,7 +499,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/boxxdigitalholding/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/boxxdigitalholding/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -437,7 +510,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a class="col-md-4 item" href="https://www.instagram.com/abjorgroup/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/abjorgroup/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -450,7 +523,7 @@
                         </a>
 
                         <!-- TIMBAL -->
-                        <a class="col-md-4 item" href="https://www.instagram.com/utecord/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/utecord/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -462,7 +535,7 @@
                             </div>
                         </a>
 
-                        <a class="col-md-4 item" href="https://www.instagram.com/pravaltaresidences/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/pravaltaresidences/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -475,7 +548,7 @@
                             </div>
                         </a>
 
-                        <a class="col-md-4 item" href="https://www.instagram.com/followmeschooldr/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/followmeschooldr/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -487,7 +560,7 @@
                             </div>
                         </a>
 
-                        <a class="col-md-4 item" href="https://www.instagram.com/casasamanrd/" target="_blank">
+                        <a class="col-6 col-md-4 item" href="https://www.instagram.com/casasamanrd/" target="_blank">
                             <div class="wow">
                                 <div class="card-image-1 mod-d" data-tilt>
                                     <div class="d-text">
@@ -498,6 +571,10 @@
                                 </div>
                             </div>
                         </a>
+                    </div>
+                    <!-- Only shown on phones, where the grid starts collapsed. -->
+                    <div class="gallery-more">
+                        <a href="javascript:void(0);" class="btn-main" id="gallery-more-btn">Voir plus de comptes</a>
                     </div>
                 </div>
             </section>
@@ -812,6 +889,45 @@
                     } else {
                         header.classList.add('menu-open');
                     }
+                });
+
+                // On a phone the 13 portfolio cards are a very long scroll, so
+                // the grid is cropped to its first rows behind a "show more".
+                // Isotope owns the item positions and re-lays them out on load
+                // and after every resize, so rather than hide items (which it
+                // would undo) we cap the container and recompute the cut on
+                // its own layoutComplete event.
+                var VISIBLE = 4;
+                var grid = document.getElementById('gallery');
+                var more = document.querySelector('.gallery-more');
+                var expanded = false;
+
+                function clampGallery() {
+                    var items = grid.querySelectorAll('.item');
+                    if (expanded || window.innerWidth > 767 || items.length <= VISIBLE) {
+                        grid.classList.remove('is-clamped');
+                        grid.style.maxHeight = '';
+                        return;
+                    }
+                    // Masonry order is not DOM order, so cut at the highest of
+                    // the items that should stay hidden.
+                    var top = grid.getBoundingClientRect().top;
+                    var cut = Infinity;
+                    for (var i = VISIBLE; i < items.length; i++) {
+                        cut = Math.min(cut, items[i].getBoundingClientRect().top - top);
+                    }
+                    grid.style.maxHeight = cut + 'px';
+                    grid.classList.add('is-clamped');
+                }
+
+                $(grid).on('layoutComplete', clampGallery);
+                $(window).on('resize', clampGallery);
+                clampGallery();
+
+                $('#gallery-more-btn').on('click', function () {
+                    expanded = true;
+                    clampGallery();
+                    more.style.display = 'none';
                 });
             });
         });
