@@ -7,7 +7,8 @@
     <link rel="icon" href="images/logo/favicon.svg" type="image/svg+xml">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="Kyros - Personal Website" name="description" />
+    <meta content="Portfolio de Lisvet Mencia, community manager et créatrice de contenu diplômée en marketing."
+        name="description" data-i18n-content="meta.description" />
     <meta content="" name="keywords" />
     <meta content="" name="author" />
     <!-- CSS Files
@@ -200,6 +201,93 @@
                 line-height: 32px;
             }
         }
+
+        /* Language switcher. It lives in .menu_side_area, the one header slot
+           that stays visible at every width, so the same control serves the
+           desktop menu and the collapsed mobile bar. The theme floats the
+           burger inside that box; laying it out as a flex row instead keeps
+           the pills and the burger on one line without fighting the float. */
+        .menu_side_area {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        #menu-btn {
+            float: none;
+            margin-left: 0;
+        }
+
+        #lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 0 auto;
+        }
+
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border: 1px solid rgba(0, 0, 0, .12);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .75);
+            color: #202020;
+            font-family: var(--title-font);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            line-height: 1;
+            cursor: pointer;
+            transition: all .25s ease;
+        }
+
+        .lang-btn img {
+            display: block;
+            width: 18px;
+            height: auto;
+            border-radius: 2px;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .lang-btn[aria-current="true"] {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+        }
+
+        /* Below 993px the theme stretches .menu_side_area to width:100% and
+           floats the burger inside it. As a flex row that 100% is measured
+           against a shrink-to-fit parent and, with the 20px margin on top,
+           runs the whole group off the right edge of the bar. */
+        @media only screen and (max-width: 992px) {
+            .menu_side_area {
+                width: auto;
+                margin-left: 0;
+            }
+        }
+
+        /* Beside the burger there is no room for the codes; the flags alone
+           still say which language is which. */
+        @media only screen and (max-width: 767px) {
+            #lang-switch {
+                gap: 4px;
+            }
+
+            .lang-btn {
+                padding: 6px;
+            }
+
+            .lang-btn span {
+                display: none;
+            }
+        }
     </style>
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
 </head>
@@ -225,13 +313,32 @@
                             </div>
                             <div class="de-flex-col header-col-right">
                                 <ul id="mainmenu">
-                                    <li><a class="active" href="#top">Accueil<span></span></a></li>
-                                    <li><a href="#section-portfolio">Portfolio<span></span></a></li>
-                                    <li><a href="#section-resume">Mon CV<span></span></a></li>
-                                    <li><a href="#section-about">À propos de moi<span></span></a></li>
-                                    <li><a href="#section-contact">Me contacter<span></span></a></li>
+                                    <li><a class="active" href="#top" data-i18n-text="nav.home">Accueil<span></span></a>
+                                    </li>
+                                    <li><a href="#section-portfolio" data-i18n-text="nav.portfolio">Portfolio<span></span></a>
+                                    </li>
+                                    <li><a href="#section-resume" data-i18n-text="nav.resume">Mon CV<span></span></a></li>
+                                    <li><a href="#section-about" data-i18n-text="nav.about">À propos de moi<span></span></a>
+                                    </li>
+                                    <li><a href="#section-contact" data-i18n-text="nav.contact">Me contacter<span></span></a>
+                                    </li>
                                 </ul>
                                 <div class="menu_side_area">
+                                    <div id="lang-switch" role="group" data-i18n-aria-label="lang.switch.label"
+                                        aria-label="Choisir la langue">
+                                        <button type="button" class="lang-btn" data-lang="fr" title="Français">
+                                            <img src="https://flagcdn.com/w40/fr.png" alt="" aria-hidden="true">
+                                            <span>FR</span>
+                                        </button>
+                                        <button type="button" class="lang-btn" data-lang="en" title="English">
+                                            <img src="https://flagcdn.com/w40/gb.png" alt="" aria-hidden="true">
+                                            <span>EN</span>
+                                        </button>
+                                        <button type="button" class="lang-btn" data-lang="es" title="Español">
+                                            <img src="https://flagcdn.com/w40/es.png" alt="" aria-hidden="true">
+                                            <span>ES</span>
+                                        </button>
+                                    </div>
                                     <span id="menu-btn"></span>
                                 </div>
                             </div>
@@ -260,7 +367,7 @@
                     <a href="mailto:rosaliamenciagonzalez@gmail.com" target="_blank"><i
                             class="fa fa-envelope fa-lg"></i></a>
                 </div>
-                <span>Me contacter</span>
+                <span data-i18n="nav.contact">Me contacter</span>
             </div>
             <!-- float text close -->
 
@@ -279,17 +386,19 @@
                         <div class="col-md-5">
                             <div class="spacer-10"></div>
                             <div class="h1 wow fadeInUp .medium-screen" style="font-size: 40px;" data-wow-delay=".6s">
-                                Bonjour, je suis <span class="id-color">Lisvet Mencia</span>. Je suis
+                                <span data-i18n="hero.greeting">Bonjour, je suis <span class="id-color">Lisvet
+                                        Mencia</span>. Je suis</span>
                                 <div class="typed-strings">
-                                    <p>Responsable des réseaux sociaux</p>
-                                    <p>Community Manager</p>
-                                    <p>Créatrice de contenu</p>
+                                    <p data-i18n="hero.job.1">Responsable des réseaux sociaux</p>
+                                    <p data-i18n="hero.job.2">Community Manager</p>
+                                    <p data-i18n="hero.job.3">Créatrice de contenu</p>
                                 </div>
                                 <div class="typed-title">
                                     <span class="typed"></span>
                                 </div>
                             </div>
-                            <p style="text-align: justify; line-height: 1.5;" class="wow fadeInUp" data-wow-delay=".6s">
+                            <p style="text-align: justify; line-height: 1.5;" class="wow fadeInUp" data-wow-delay=".6s"
+                                data-i18n="hero.intro">
                                 Professionnelle du marketing passionnée par la création de contenu et la gestion de
                                 communautés. Je développe la présence en ligne des entreprises grâce à des stratégies
                                 créatives. Je possède de solides compétences en gestion des réseaux sociaux et une
@@ -298,22 +407,24 @@
                             <div class="spacer-10"></div>
                             <ul class="list_location wow fadeInUp" data-wow-delay=".8s">
                                 <li>
-                                    <span>Localisation</span>
-                                    Strasbourg, France
+                                    <span data-i18n="hero.location.label">Localisation</span>
+                                    <div data-i18n="hero.location.value">Strasbourg, France</div>
                                 </li>
                                 <li>
-                                    <span style="line-height: 1.1;">Formation</span>
-                                    <div style="line-height: 1.1;">
+                                    <span style="line-height: 1.1;" data-i18n="hero.education.label">Formation</span>
+                                    <div style="line-height: 1.1;" data-i18n="hero.education.value">
                                         Licence en Marketing <br>
                                         avec mention
                                     </div>
                                 </li>
                                 <li>
-                                    <span>Langues</span>
+                                    <span data-i18n="hero.languages.label">Langues</span>
                                     <div style="display: flex; gap: 10px; margin-top: 5px;">
                                         <img src="https://flagcdn.com/w40/es.png" alt="Espagnol" title="Espagnol"
+                                            data-i18n-alt="lang.spanish" data-i18n-title="lang.spanish"
                                             style="width: 30px; border-radius: 4px; box-shadow: 1px 1px 3px rgba(0,0,0,0.2);">
                                         <img src="https://flagcdn.com/w40/fr.png" alt="Français" title="Français"
+                                            data-i18n-alt="lang.french" data-i18n-title="lang.french"
                                             style="width: 30px; border-radius: 4px; box-shadow: 1px 1px 3px rgba(0,0,0,0.2);">
                                     </div>
                                 </li>
@@ -322,7 +433,8 @@
                                 <a class="btn btn-main wow fadeInUp"
                                     style="z-index: 10; padding: 15px 35px; border-radius: 30px; display: inline-flex; align-items: center;"
                                     data-wow-delay=".6s" href="pdf/CV.pdf" download target="_blank">
-                                    <i class="fa fa-download" style="margin-right: 10px;"></i> Télécharger le CV
+                                    <i class="fa fa-download" style="margin-right: 10px;"></i> <span
+                                        data-i18n="hero.cta">Télécharger le CV</span>
                                 </a>
                             </div>
                         </div>
@@ -343,7 +455,7 @@
                 <div class="container relative">
                     <div class="row">
                         <div class="col-md-12 text-center wow fadeInUp">
-                            <h2>Ce que je fais</h2>
+                            <h2 data-i18n="services.heading">Ce que je fais</h2>
                             <div class="space-border"></div>
                         </div>
                         <div class="spacer-single"></div>
@@ -353,10 +465,11 @@
                                     <div class="d-inner">
                                         <i class="icon_calendar id-color"></i>
                                         <div class="text">
-                                            <h3>Création et planification de contenu</h3>
-                                            Développement de contenus créatifs et attractifs, adaptés aux besoins et aux
-                                            objectifs du client, avec une attention particulière portée à la narration et
-                                            à la pertinence pour l'audience.
+                                            <h3 data-i18n="services.1.title">Création et planification de contenu</h3>
+                                            <span data-i18n="services.1.text">Développement de contenus créatifs et
+                                                attractifs, adaptés aux besoins et aux objectifs du client, avec une
+                                                attention particulière portée à la narration et à la pertinence pour
+                                                l'audience.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -366,10 +479,11 @@
                                     <div class="d-inner">
                                         <i class="icon_chat_alt id-color"></i>
                                         <div class="text">
-                                            <h3>Communication communautaire</h3>
-                                            Interaction proactive avec la communauté à travers la gestion des
-                                            commentaires sur les réseaux sociaux, en assurant une communication efficace
-                                            et en construisant des relations solides avec les abonnés.
+                                            <h3 data-i18n="services.2.title">Communication communautaire</h3>
+                                            <span data-i18n="services.2.text">Interaction proactive avec la communauté à
+                                                travers la gestion des commentaires sur les réseaux sociaux, en assurant
+                                                une communication efficace et en construisant des relations solides avec
+                                                les abonnés.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -379,9 +493,10 @@
                                     <div class="d-inner">
                                         <i class="icon_camera_alt id-color"></i>
                                         <div class="text">
-                                            <h3>Présence lors des événements</h3>
-                                            Participation aux événements pertinents pour assister le photographe et
-                                            capturer un contenu exclusif et de haute qualité.
+                                            <h3 data-i18n="services.3.title">Présence lors des événements</h3>
+                                            <span data-i18n="services.3.text">Participation aux événements pertinents
+                                                pour assister le photographe et capturer un contenu exclusif et de haute
+                                                qualité.</span>
                                             <br>
                                             <br>
                                         </div>
@@ -400,10 +515,10 @@
 
                         <!-- The Reveal Button & Description -->
                         <div id="video-trigger-area" class="wow fadeInUp" data-wow-delay=".2s">
-                            <h3 class="mb-3">Exemple de production audiovisuelle</h3>
+                            <h3 class="mb-3" data-i18n="video.heading">Exemple de production audiovisuelle</h3>
 
                             <!-- Explanation Paragraph -->
-                            <p class="mb-4"
+                            <p class="mb-4" data-i18n="video.text"
                                 style="max-width: 600px; margin: 0 auto; color: #707070; font-size: 16px; line-height: 1.6;">
                                 Cette vidéo est un exemple de contenu pour lequel j'ai été en charge de la
                                 <strong>définition du scénario</strong> et j'ai participé activement à la <strong>journée de
@@ -412,7 +527,8 @@
 
                             <a id="playVideoLink" href="javascript:void(0);" class="btn-main"
                                 style="padding: 15px 40px; font-size: 18px; border-radius: 50px; box-shadow: 0 10px 25px rgba(203, 124, 111, 0.4);">
-                                <i class="fa fa-play-circle fa-lg" style="margin-right: 10px;"></i> Voir le résultat
+                                <i class="fa fa-play-circle fa-lg" style="margin-right: 10px;"></i> <span
+                                    data-i18n="video.cta">Voir le résultat</span>
                             </a>
                         </div>
 
@@ -422,7 +538,8 @@
                             <video id="videoPlayer" controls
                                 style="height: 80vh; width: 45vh; border-radius: 20px; border: 3px solid #CB7C6F; box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.2);">
                                 <source src="video/maserati.mp4" type="video/mp4">
-                                Votre navigateur ne prend pas en charge la balise vidéo.
+                                <span data-i18n="video.fallback">Votre navigateur ne prend pas en charge la balise
+                                    vidéo.</span>
                             </video>
                         </div>
 
@@ -470,9 +587,9 @@
                 <div class="container relative">
                     <div class="row">
                         <div class="col-md-12 text-center wow fadeInUp">
-                            <h2>Portfolio</h2>
+                            <h2 data-i18n="portfolio.heading">Portfolio</h2>
                             <div class="space-border"></div>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">
+                            <p class="wow fadeInUp" data-wow-delay=".6s" data-i18n="portfolio.intro">
                                 J'ai été en charge des comptes suivants
                             </p>
                         </div>
@@ -632,7 +749,8 @@
                     </div>
                     <!-- Only shown on phones, where the grid starts collapsed. -->
                     <div class="gallery-more">
-                        <a href="javascript:void(0);" class="btn-main" id="gallery-more-btn">Voir plus de comptes</a>
+                        <a href="javascript:void(0);" class="btn-main" id="gallery-more-btn"
+                            data-i18n="portfolio.more">Voir plus de comptes</a>
                     </div>
                 </div>
             </section>
@@ -640,58 +758,62 @@
                 <div class="container relative">
                     <div class="row">
                         <div class="col-md-12 text-center wow fadeInUp">
-                            <h2>Mon CV</h2>
+                            <h2 data-i18n="resume.heading">Mon CV</h2>
                             <div class="space-border"></div>
                         </div>
                     </div>
                     <div class="row gh-5">
                         <div class="col-lg-6 wow fadeInUp">
                             <div class="p-4">
-                                <h3 class="s_border">Expérience</h3>
+                                <h3 class="s_border" data-i18n="resume.experience">Expérience</h3>
                                 <ul class="d_timeline">
                                     <li class="d_timeline-item">
-                                        <h3 class="d_timeline-title">février 2024 - juillet 2024</h3>
+                                        <h3 class="d_timeline-title" data-i18n="resume.boxx.date">février 2024 - juillet 2024</h3>
                                         <a href="https://boxxrd.com/" target="_blank">
                                             <img class="mt-3 ml-5 img-fluid" src="images/experience/boxx.png"
                                                 style="max-width: 200px;" alt="">
                                         </a>
-                                        <p class="d_timeline-text" style="text-align: justify;"><span
-                                                class="d_title">Content Creator</span>
+                                        <p class="d_timeline-text" style="text-align: justify;"><span class="d_title"
+                                                data-i18n="resume.boxx.role">Content Creator</span>
                                             <a href="https://boxxrd.com/" target="_blank"><span class="d_company">Boxx
                                                     Digital Holding</span></a>
-                                            Groupe d'entreprises dominicain qui propose des solutions digitales pour
-                                            développer le commerce de ses clients et leur présence en ligne. <br />
-                                            Mes missions :<br />
-                                            - Créer du contenu pour une dizaine de comptes sur Instagram et
-                                            Facebook.<br />
-                                            - Interagir avec les utilisateurs en répondant à leurs messages et
-                                            commentaires.<br />
-                                            - Assister aux événements et aux séances photo pour chaque marque.
+                                            <span data-i18n="resume.boxx.text">Groupe d'entreprises dominicain qui
+                                                propose des solutions digitales pour développer le commerce de ses
+                                                clients et leur présence en ligne. <br />
+                                                Mes missions :<br />
+                                                - Créer du contenu pour une dizaine de comptes sur Instagram et
+                                                Facebook.<br />
+                                                - Interagir avec les utilisateurs en répondant à leurs messages et
+                                                commentaires.<br />
+                                                - Assister aux événements et aux séances photo pour chaque
+                                                marque.</span>
                                         </p>
                                     </li>
                                     <li class="d_timeline-item">
-                                        <h3 class="d_timeline-title">octobre 2024 - août 2025</h3>
+                                        <h3 class="d_timeline-title" data-i18n="resume.timbal.date">octobre 2024 - août 2025</h3>
                                         <a href="https://www.timbal.do/" target="_blank">
                                             <img class="mt-3 ml-5 img-fluid" src="images/experience/timbal.png"
                                                 style="max-width: 200px;" alt="">
                                         </a>
-                                        <p class="d_timeline-text" style="text-align: justify;"><span
-                                                class="d_title">Community Manager Freelance</span>
+                                        <p class="d_timeline-text" style="text-align: justify;"><span class="d_title"
+                                                data-i18n="resume.timbal.role">Community Manager Freelance</span>
                                             <a href="https://boxxrd.com/" target="_blank"><span
                                                     class="d_company">Timbal</span></a>
-                                            Agence de marketing digital dominicaine qui propose des services de
-                                            marketing digital personnalisés dans des domaines tels que le branding, la
-                                            croissance digitale, la création et le développement web. <br />
-                                            Mes missions :<br />
-                                            - Développer et gérer des stratégies de contenu digital, en assurant leur
-                                            alignement avec les valeurs et les objectifs de la marque, et élaborer des
-                                            calendriers de contenu créatifs et personnalisés pour chaque compte.<br />
-                                            - Collaborer activement avec les clients, recueillir leurs retours et guider
-                                            les designers dans la production de contenus graphiques et
-                                            audiovisuels.<br />
-                                            - Administrer les profils des réseaux sociaux, programmer les publications,
-                                            gérer les campagnes publicitaires et réaliser des analyses de
-                                            l'environnement digital afin d'optimiser les performances.<br />
+                                            <span data-i18n="resume.timbal.text">Agence de marketing digital
+                                                dominicaine qui propose des services de marketing digital personnalisés
+                                                dans des domaines tels que le branding, la croissance digitale, la
+                                                création et le développement web. <br />
+                                                Mes missions :<br />
+                                                - Développer et gérer des stratégies de contenu digital, en assurant
+                                                leur alignement avec les valeurs et les objectifs de la marque, et
+                                                élaborer des calendriers de contenu créatifs et personnalisés pour chaque
+                                                compte.<br />
+                                                - Collaborer activement avec les clients, recueillir leurs retours et
+                                                guider les designers dans la production de contenus graphiques et
+                                                audiovisuels.<br />
+                                                - Administrer les profils des réseaux sociaux, programmer les
+                                                publications, gérer les campagnes publicitaires et réaliser des analyses
+                                                de l'environnement digital afin d'optimiser les performances.<br /></span>
                                         </p>
                                     </li>
                                 </ul>
@@ -699,7 +821,7 @@
                         </div>
                         <div class="col-lg-6 wow fadeInUp">
                             <div class="p-4">
-                                <h3 class="s_border">Formation</h3>
+                                <h3 class="s_border" data-i18n="resume.education">Formation</h3>
                                 <ul class="d_timeline">
                                     <li class="d_timeline-item">
                                         <h3 class="d_timeline-title">2022 - 2026</h3>
@@ -708,10 +830,11 @@
                                                 style="width: 400px; max-width: 100%; border-radius: 10px;" alt="">
                                         </a>
                                         <div class="d_timeline-text" style="text-align: justify;">
-                                            <span class="d_title">Licence en Marketing</span>
+                                            <span class="d_title" data-i18n="resume.utesa.degree">Licence en
+                                                Marketing</span>
                                             <span class="d_company">Universidad Tecnológica de Santiago - UTESA</span>
 
-                                            <p>
+                                            <p data-i18n="resume.utesa.text">
                                                 Formation académique pluridisciplinaire qui allie la <strong>stratégie
                                                     commerciale</strong> à la vision managériale. Le programme intègre
                                                 l'analyse économique (micro et macro), la comptabilité financière et le
@@ -722,7 +845,7 @@
 
                                             <!-- Bouton pour ouvrir la modale -->
                                             <a href="#" class="btn-main btn-small" data-bs-toggle="modal"
-                                                data-bs-target="#modal-utesa">
+                                                data-bs-target="#modal-utesa" data-i18n="resume.utesa.cta">
                                                 Détail du programme
                                             </a>
                                         </div>
@@ -740,8 +863,8 @@
                             <img src="images/misc/perfil8.jpeg" class="img-fluid" alt="">
                         </div>
                         <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
-                            <h2>À propos de moi</h2>
-                            <p style="text-align: justify;">
+                            <h2 data-i18n="about.heading">À propos de moi</h2>
+                            <p style="text-align: justify;" data-i18n="about.text">
                                 J'utilise des technologies modernes pour enrichir mon travail de créatrice de contenu et
                                 de community manager, en restant à jour avec les tendances digitales et en proposant des
                                 services de haute qualité. L'intégration de ces outils dans mon flux de travail optimise
@@ -813,7 +936,7 @@
                 <div class="container z-index-1000">
                     <div class="row">
                         <div class="col-md-12 text-center wow fadeInUp">
-                            <h2>Me contacter</h2>
+                            <h2 data-i18n="contact.heading">Me contacter</h2>
                             <div class="space-border"></div>
                         </div>
 
@@ -821,7 +944,7 @@
                         <div class="row text-center wow fadeInUp">
                             <div class="col-md-4">
                                 <div class="wm-1"></div>
-                                <h6>E-mail</h6>
+                                <h6 data-i18n="contact.email">E-mail</h6>
 
                                 <a href="mailto:rosaliamenciagonzalez@gmail.com" target="_blank"><i
                                         class="fa fa-envelope fa-lg"></i>
@@ -837,7 +960,8 @@
                                 <div class="wm-1"></div>
                                 <h6>LinkedIn</h6>
                                 <a href="https://www.linkedin.com/in/lisvet-mencia"
-                                    target="_blank"><i class="fa fa-linkedin fa-lg"></i> Mon profil</a>
+                                    target="_blank"><i class="fa fa-linkedin fa-lg"></i> <span
+                                        data-i18n="contact.profile">Mon profil</span></a>
                             </div>
                         </div>
                     </div>
@@ -875,19 +999,12 @@
                 // font size so it always fits on a single line, which keeps the
                 // typing animation from wrapping and shoving the page down.
                 var line = document.querySelector('.typed-title');
-                var titles = [].map.call(
-                    document.querySelectorAll('.typed-strings p'),
-                    function (p) { return p.textContent; }
-                );
                 var maxSize = parseFloat(getComputedStyle(line).getPropertyValue('--typed-max-size')) || 40;
                 var minSize = 14;
+                var titles = [];
                 var sizes = [];
                 var current = 0;
-
-                // Off-flow copy used to measure a title at the largest size.
-                var ruler = document.createElement('span');
-                ruler.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
-                line.appendChild(ruler);
+                var ruler = null;
 
                 function measure() {
                     // Leave room for the blinking cursor the plugin appends.
@@ -913,25 +1030,59 @@
                     fit(current);
                 }
 
-                refresh();
+                // Called again after a language change: the plugin copies the
+                // titles into its own array at build time, so it has to be torn
+                // down and rebuilt rather than told about the new strings. The
+                // typed element, its blinking cursor and the ruler all live
+                // inside .typed-title, so emptying it clears the old run.
+                function startTyped() {
+                    var previous = $('.typed').data('typed');
+                    if (previous) {
+                        previous.stop = true;
+                        clearTimeout(previous.timeout);
+                    }
+                    line.innerHTML = '<span class="typed"></span>';
+
+                    // Off-flow copy used to measure a title at the largest size.
+                    ruler = document.createElement('span');
+                    ruler.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+                    line.appendChild(ruler);
+
+                    titles = [].map.call(
+                        document.querySelectorAll('.typed-strings p'),
+                        function (p) { return p.textContent; }
+                    );
+                    current = 0;
+                    refresh();
+
+                    // jquery typed plugin
+                    $(".typed").typed({
+                        stringsElement: $('.typed-strings'),
+                        typeSpeed: 100,
+                        backDelay: 500,
+                        loop: true,
+                        contentType: 'html', // or text
+                        // defaults to false for infinite loop
+                        loopCount: false,
+                        preStringTyped: fit,
+                        callback: function () { null; },
+                        resetCallback: function () { newTyped(); }
+                    });
+                }
+
+                startTyped();
                 window.addEventListener('resize', refresh);
                 // Web fonts can land after the first measurement.
                 if (document.fonts && document.fonts.ready) {
                     document.fonts.ready.then(refresh);
                 }
 
-                // jquery typed plugin
-                $(".typed").typed({
-                    stringsElement: $('.typed-strings'),
-                    typeSpeed: 100,
-                    backDelay: 500,
-                    loop: true,
-                    contentType: 'html', // or text
-                    // defaults to false for infinite loop
-                    loopCount: false,
-                    preStringTyped: fit,
-                    callback: function () { null; },
-                    resetCallback: function () { newTyped(); }
+                // js/i18n.js fires this once the copy has been swapped. The new
+                // wording changes how tall the cards and the timeline are, so
+                // isotope and the mobile gallery clamp need a fresh layout too.
+                document.addEventListener('languagechange', function () {
+                    startTyped();
+                    window.dispatchEvent(new Event('resize'));
                 });
 
                 // designesia.js reveals the mobile menu by animating the header
@@ -997,7 +1148,8 @@
             <div class="modal-content" style="background-color: #fff;"> <!-- Fond blanc pour la lisibilité -->
 
                 <div class="modal-header" style="border-bottom: none; padding: 20px 30px;">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"
+                        data-i18n-aria-label="modal.close"></button>
                 </div>
 
                 <div class="modal-body" style="padding: 0 40px 50px 40px;">
@@ -1033,7 +1185,8 @@
                     </style>
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="mb-4" style="color: #202020;">Programme d'études : Licence en Marketing</h3>
+                            <h3 class="mb-4" style="color: #202020;" data-i18n="modal.title">Programme d'études :
+                                Licence en Marketing</h3>
 
                             <!-- Nav Tabs -->
                             <ul class="nav nav-pills mb-4 justify-content-center" id="pills-tab" role="tablist"
@@ -1041,20 +1194,17 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-marketing-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-marketing" type="button" role="tab" aria-selected="true"
-                                        style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee;">Spécialisation
-                                        (Marketing)</button>
+                                        data-i18n="modal.tab.marketing" style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee;">Spécialisation (Marketing)</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-business-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-business" type="button" role="tab" aria-selected="false"
-                                        style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee; color: rgba(203, 124, 111)">Business
-                                        et Gestion</button>
+                                        data-i18n="modal.tab.business" style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee;">Business et Gestion</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="pills-general-tab" data-bs-toggle="pill"
                                         data-bs-target="#pills-general" type="button" role="tab" aria-selected="false"
-                                        style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee;">Tronc
-                                        commun et Économie</button>
+                                        data-i18n="modal.tab.general" style="border-radius: 50px; padding: 10px 25px; border: 1px solid #eee;">Tronc commun et Économie</button>
                                 </li>
                             </ul>
 
@@ -1068,27 +1218,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_tag_alt"></i> Stratégie et Marché</h4>
-                                                <ul
+                                                        class="icon_tag_alt"></i> <span
+                                                        data-i18n="pensum.strategy.title">Stratégie et Marché</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.strategy.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Marketing I
-                                                        (Fondamentaux)</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Marketing II
-                                                        (Stratégique)</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Marketing
-                                                        international</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Marketing
-                                                        politique</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Audit des
-                                                        marchés</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Études de
-                                                        marché</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1096,28 +1230,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_bullhorn"></i> Promotion et Vente</h4>
-                                                <ul
+                                                        class="icon_bullhorn"></i> <span
+                                                        data-i18n="pensum.promotion.title">Promotion et Vente</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.promotion.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Publicité et
-                                                        Propagande I</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Direction des
-                                                        ventes</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Relations
-                                                        publiques</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Merchandising
-                                                        et Trade Marketing</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Comportement
-                                                        du consommateur</li>
-                                                    <li class="mb-2" style="font-weight: bold; color: #202020;"><i
-                                                            class="fa fa-star"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Projet de fin
-                                                        d'études (Mémoire)</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1131,27 +1248,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_briefcase"></i> Management</h4>
-                                                <ul
+                                                        class="icon_briefcase"></i> <span
+                                                        data-i18n="pensum.management.title">Management</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.management.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Principes de
-                                                        management</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Organisation
-                                                        des entreprises</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Relations
-                                                        humaines</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Responsabilité
-                                                        sociétale des entreprises</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Gestion du
-                                                        personnel</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Droit du
-                                                        travail et droit commercial</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1159,27 +1260,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_chat_alt"></i> Langues et Communication</h4>
-                                                <ul
+                                                        class="icon_chat_alt"></i> <span
+                                                        data-i18n="pensum.languages.title">Langues et Communication</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.languages.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Rédaction
-                                                        commerciale</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Langue
-                                                        espagnole (I et II)</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Anglais
-                                                        niveau I</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Anglais
-                                                        niveau II</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Anglais
-                                                        niveau III</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Anglais
-                                                        niveau IV</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1193,27 +1278,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_piechart"></i> Économie et Finance</h4>
-                                                <ul
+                                                        class="icon_piechart"></i> <span
+                                                        data-i18n="pensum.economy.title">Économie et Finance</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.economy.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Comptabilité
-                                                        (I, II et III)</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Principes
-                                                        d'économie</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Microéconomie
-                                                    </li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Macroéconomie
-                                                    </li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Monnaie et
-                                                        Banque</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Comptabilité
-                                                        analytique I</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1221,27 +1290,11 @@
                                             <div class="p-4"
                                                 style="background: #f9f9f9; border-radius: 10px; height: 100%;">
                                                 <h4 style="font-size: 18px; margin-bottom: 20px; color: #CB7C6F;"><i
-                                                        class="icon_book_alt"></i> Sciences exactes et Humanités</h4>
-                                                <ul
+                                                        class="icon_book_alt"></i> <span
+                                                        data-i18n="pensum.science.title">Sciences exactes et Humanités</span></h4>
+                                                <!-- Filled from the dictionary in js/i18n.js -->
+                                                <ul data-i18n-list="pensum.science.items"
                                                     style="list-style: none; padding: 0; font-size: 14px; color: #606060;">
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Mathématiques
-                                                        de base et supérieures</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Statistiques
-                                                        (I et II)</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Méthodologie
-                                                        de la recherche</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Introduction
-                                                        à la philosophie</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Psychologie
-                                                        générale</li>
-                                                    <li class="mb-2"><i class="fa fa-check-circle"
-                                                            style="color: #CB7C6F; margin-right: 8px;"></i>Sociologie
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1255,12 +1308,19 @@
                 </div>
 
                 <div class="modal-footer" style="border-top: none; justify-content: center; padding-bottom: 30px;">
-                    <button type="button" class="btn-main" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn-main" data-bs-dismiss="modal" data-i18n="modal.close">Fermer</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal UTESA End -->
+
+    <!-- Rewrites the markup (which ships in French) into the visitor's
+         language. Loaded last so the whole page - the modal above included -
+         is already parsed, and it still runs before jQuery's ready callbacks
+         boot the theme and while #preloader covers the page, so untranslated
+         copy is never painted. -->
+    <script src="js/i18n.js"></script>
 </body>
 
 </html>
