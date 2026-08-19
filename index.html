@@ -202,11 +202,13 @@
             }
         }
 
-        /* Language switcher. It lives in .menu_side_area, the one header slot
-           that stays visible at every width, so the same control serves the
-           desktop menu and the collapsed mobile bar. The theme floats the
-           burger inside that box; laying it out as a flex row instead keeps
-           the pills and the burger on one line without fighting the float. */
+        /* Language switcher: a single segmented control - one track holding the
+           three languages, the selected one filled. It lives in
+           .menu_side_area, the one header slot that stays visible at every
+           width, so the same control serves the desktop menu and the collapsed
+           mobile bar. The theme floats the burger inside that box; laying it
+           out as a flex row instead keeps the switch and the burger on one line
+           without fighting the float. */
         .menu_side_area {
             display: flex;
             align-items: center;
@@ -220,21 +222,24 @@
         }
 
         #lang-switch {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
             flex: 0 0 auto;
+            padding: 3px;
+            border: 1px solid rgba(0, 0, 0, .12);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .75);
         }
 
         .lang-btn {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 10px;
-            border: 1px solid rgba(0, 0, 0, .12);
+            padding: 5px 11px;
+            border: 0;
             border-radius: 30px;
-            background: rgba(255, 255, 255, .75);
-            color: #202020;
+            background: none;
+            color: #707070;
             font-family: var(--title-font);
             font-size: 12px;
             font-weight: 700;
@@ -244,21 +249,30 @@
             transition: all .25s ease;
         }
 
+        /* Only the selected flag keeps its colours, so the switch reads at a
+           glance even where the codes are hidden. */
         .lang-btn img {
             display: block;
             width: 18px;
             height: auto;
             border-radius: 2px;
+            filter: grayscale(1);
+            opacity: .6;
+            transition: all .25s ease;
         }
 
         .lang-btn:hover {
-            border-color: var(--primary-color);
             color: var(--primary-color);
+        }
+
+        .lang-btn:hover img,
+        .lang-btn[aria-current="true"] img {
+            filter: none;
+            opacity: 1;
         }
 
         .lang-btn[aria-current="true"] {
             background: var(--primary-color);
-            border-color: var(--primary-color);
             color: #fff;
         }
 
@@ -276,12 +290,8 @@
         /* Beside the burger there is no room for the codes; the flags alone
            still say which language is which. */
         @media only screen and (max-width: 767px) {
-            #lang-switch {
-                gap: 4px;
-            }
-
             .lang-btn {
-                padding: 6px;
+                padding: 6px 8px;
             }
 
             .lang-btn span {
@@ -768,6 +778,33 @@
                                 <h3 class="s_border" data-i18n="resume.experience">Expérience</h3>
                                 <ul class="d_timeline">
                                     <li class="d_timeline-item">
+                                        <h3 class="d_timeline-title" data-i18n="resume.timbal.date">octobre 2024 - août 2025</h3>
+                                        <a href="https://www.timbal.do/" target="_blank">
+                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/timbal.png"
+                                                style="max-width: 200px;" alt="">
+                                        </a>
+                                        <p class="d_timeline-text" style="text-align: justify;"><span class="d_title"
+                                                data-i18n="resume.timbal.role">Community Manager Freelance</span>
+                                            <a href="https://www.timbal.do/" target="_blank"><span
+                                                    class="d_company">Timbal</span></a>
+                                            <span data-i18n="resume.timbal.text">Agence de marketing digital
+                                                dominicaine qui propose des services de marketing digital personnalisés
+                                                dans des domaines tels que le branding, la croissance digitale, la
+                                                création et le développement web. <br />
+                                                Mes missions :<br />
+                                                - Développer et gérer des stratégies de contenu digital, en assurant
+                                                leur alignement avec les valeurs et les objectifs de la marque, et
+                                                élaborer des calendriers de contenu créatifs et personnalisés pour chaque
+                                                compte.<br />
+                                                - Collaborer activement avec les clients, recueillir leurs retours et
+                                                guider les designers dans la production de contenus graphiques et
+                                                audiovisuels.<br />
+                                                - Administrer les profils des réseaux sociaux, programmer les
+                                                publications, gérer les campagnes publicitaires et réaliser des analyses
+                                                de l'environnement digital afin d'optimiser les performances.<br /></span>
+                                        </p>
+                                    </li>
+                                    <li class="d_timeline-item">
                                         <h3 class="d_timeline-title" data-i18n="resume.boxx.date">février 2024 - juillet 2024</h3>
                                         <a href="https://boxxrd.com/" target="_blank">
                                             <img class="mt-3 ml-5 img-fluid" src="images/experience/boxx.png"
@@ -787,33 +824,6 @@
                                                 commentaires.<br />
                                                 - Assister aux événements et aux séances photo pour chaque
                                                 marque.</span>
-                                        </p>
-                                    </li>
-                                    <li class="d_timeline-item">
-                                        <h3 class="d_timeline-title" data-i18n="resume.timbal.date">octobre 2024 - août 2025</h3>
-                                        <a href="https://www.timbal.do/" target="_blank">
-                                            <img class="mt-3 ml-5 img-fluid" src="images/experience/timbal.png"
-                                                style="max-width: 200px;" alt="">
-                                        </a>
-                                        <p class="d_timeline-text" style="text-align: justify;"><span class="d_title"
-                                                data-i18n="resume.timbal.role">Community Manager Freelance</span>
-                                            <a href="https://boxxrd.com/" target="_blank"><span
-                                                    class="d_company">Timbal</span></a>
-                                            <span data-i18n="resume.timbal.text">Agence de marketing digital
-                                                dominicaine qui propose des services de marketing digital personnalisés
-                                                dans des domaines tels que le branding, la croissance digitale, la
-                                                création et le développement web. <br />
-                                                Mes missions :<br />
-                                                - Développer et gérer des stratégies de contenu digital, en assurant
-                                                leur alignement avec les valeurs et les objectifs de la marque, et
-                                                élaborer des calendriers de contenu créatifs et personnalisés pour chaque
-                                                compte.<br />
-                                                - Collaborer activement avec les clients, recueillir leurs retours et
-                                                guider les designers dans la production de contenus graphiques et
-                                                audiovisuels.<br />
-                                                - Administrer les profils des réseaux sociaux, programmer les
-                                                publications, gérer les campagnes publicitaires et réaliser des analyses
-                                                de l'environnement digital afin d'optimiser les performances.<br /></span>
                                         </p>
                                     </li>
                                 </ul>
@@ -1077,12 +1087,17 @@
                     document.fonts.ready.then(refresh);
                 }
 
-                // js/i18n.js fires this once the copy has been swapped. The new
-                // wording changes how tall the cards and the timeline are, so
-                // isotope and the mobile gallery clamp need a fresh layout too.
+                // js/i18n.js fires this once the copy has been swapped. A
+                // window resize event would relayout everything, but
+                // designesia.js answers one by stripping the sticky header
+                // classes, which only a later scroll puts back - mid-page that
+                // drops the navbar out of sight. So relayout by hand instead.
                 document.addEventListener('languagechange', function () {
                     startTyped();
-                    window.dispatchEvent(new Event('resize'));
+                    if ($(grid).data('isotope')) {
+                        $(grid).isotope('layout');
+                    }
+                    clampGallery();
                 });
 
                 // designesia.js reveals the mobile menu by animating the header
