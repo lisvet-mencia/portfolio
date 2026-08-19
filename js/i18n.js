@@ -70,17 +70,17 @@
             "resume.experience": "Expérience",
             "resume.boxx.date": "février 2024 - juillet 2024",
             "resume.boxx.role": "Content Creator",
-            "resume.boxx.text": "Groupe d'entreprises dominicain qui propose des solutions digitales pour développer le commerce de ses clients et leur présence en ligne. <br />Mes missions :<br />- Créer du contenu pour une dizaine de comptes sur Instagram et Facebook.<br />- Interagir avec les utilisateurs en répondant à leurs messages et commentaires.<br />- Assister aux événements et aux séances photo pour chaque marque.",
+            "resume.boxx.text": "Entreprise dominicaine fournissant des solutions digitales pour renforcer la présence en ligne de ses clients. <br />Mes missions :<br />- Créer du contenu pour une dizaine de comptes sur Instagram et Facebook.<br />- Interagir avec les utilisateurs en répondant à leurs messages et commentaires.<br />- Assister aux événements et aux séances photo pour chaque marque.",
             "resume.timbal.date": "octobre 2024 - août 2025",
             "resume.timbal.role": "Community Manager Freelance",
-            "resume.timbal.text": "Agence de marketing digital dominicaine qui propose des services de marketing digital personnalisés dans des domaines tels que le branding, la croissance digitale, la création et le développement web. <br />Mes missions :<br />- Développer et gérer des stratégies de contenu digital, en assurant leur alignement avec les valeurs et les objectifs de la marque, et élaborer des calendriers de contenu créatifs et personnalisés pour chaque compte.<br />- Collaborer activement avec les clients, recueillir leurs retours et guider les designers dans la production de contenus graphiques et audiovisuels.<br />- Administrer les profils des réseaux sociaux, programmer les publications, gérer les campagnes publicitaires et réaliser des analyses de l'environnement digital afin d'optimiser les performances.<br />",
+            "resume.timbal.text": "Agence de marketing digital dominicaine qui propose des services de marketing digital personnalisés dans des domaines tels que le branding, la croissance digitale, la création et le développement web. <br />Mes missions :<br />- Développer et gérer des stratégies de contenu digital, en assurant leur alignement avec les valeurs et les objectifs de la marque, et élaborer des calendriers de contenu créatifs et personnalisés pour chaque compte.<br />- Collaborer activement avec les clients, recueillir leurs retours et guider les designers dans la production de contenus graphiques et audiovisuels.<br />- Administrer les profils des réseaux sociaux, programmer les publications, gérer les campagnes publicitaires.<br />",
             "resume.education": "Formation",
             "resume.utesa.degree": "Licence en Marketing",
-            "resume.utesa.text": "Formation académique pluridisciplinaire qui allie la <strong>stratégie commerciale</strong> à la vision managériale. Le programme intègre l'analyse économique (micro et macro), la comptabilité financière et le raisonnement logico-mathématique, offrant une compréhension à 360º de l'environnement de l'entreprise et du comportement sociologique du consommateur.",
+            "resume.utesa.text": "Formation académique pluridisciplinaire qui allie la <strong>stratégie commerciale</strong> à la vision managériale. Le programme intègre l'analyse économique (micro et macro), la comptabilité financière, offrant une compréhension à 360º de l'environnement de l'entreprise et du comportement sociologique du consommateur.",
             "resume.utesa.cta": "Détail du programme",
 
             "about.heading": "À propos de moi",
-            "about.text": "J'utilise des technologies modernes pour enrichir mon travail de créatrice de contenu et de community manager, en restant à jour avec les tendances digitales et en proposant des services de haute qualité. L'intégration de ces outils dans mon flux de travail optimise la gestion de projet, la communication et la création de contenu sur des plateformes comme Facebook et Instagram. Avec un souci constant d'efficacité et d'innovation, je garantis des résultats remarquables sur chaque projet.",
+            "about.text": "J'utilise des technologies modernes pour enrichir mon travail de créatrice de contenu et de community manager, en restant à jour avec les tendances digitales. L'intégration de ces outils dans mon flux de travail optimise la gestion de projet, la communication et la création de contenu sur des plateformes comme Facebook et Instagram. Avec un souci constant d'efficacité et d'innovation, je garantis des résultats remarquables sur chaque projet.",
 
             "contact.heading": "Me contacter",
             "contact.email": "E-mail",
@@ -423,8 +423,9 @@
         } catch (e) { /* private browsing */ }
     }
 
-    /* ?lang= wins (shareable links), then the visitor's last choice, then the
-       browser's own preference order, then French. */
+    /* ?lang= wins (shareable links), then the visitor's own last choice.
+       Nothing else: a first visit is always French, whatever the browser
+       happens to be set to. */
     function detect() {
         var fromUrl = (location.search.match(/[?&]lang=([a-zA-Z-]+)/) || [])[1];
         if (fromUrl && isSupported(fromUrl.slice(0, 2).toLowerCase())) {
@@ -433,11 +434,6 @@
         var saved = stored();
         if (saved && isSupported(saved)) return saved;
 
-        var prefs = navigator.languages || [navigator.language || ""];
-        for (var i = 0; i < prefs.length; i++) {
-            var code = String(prefs[i]).slice(0, 2).toLowerCase();
-            if (isSupported(code)) return code;
-        }
         return DEFAULT_LANG;
     }
 
