@@ -298,6 +298,16 @@
                 display: none;
             }
         }
+
+        /* js/plugins.js bundles MDB, which on the first mousedown attaches its ripple effect to
+           every element carrying the .btn class — the "Télécharger le CV" button is the only one
+           on the page. MDB then injects a <div class="ripple-wave"> sized inline to a circle
+           larger than the button, counting on css/mdb.min.css to give it position:absolute. That
+           sheet is not loaded here, so the div stays in the flow and stretches the button on
+           click. Nothing else in the theme uses ripples, so it is simply kept out of the flow. */
+        .ripple-wave {
+            display: none !important;
+        }
     </style>
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
 </head>
