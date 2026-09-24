@@ -1,0 +1,849 @@
+/* Motion layer: styles for the pieces js/motion.js drives, plus the purely
+   CSS effects (hover states, loops). Everything here degrades to a static
+   page: the initial "hidden" states of scroll reveals are set from JS, never
+   from this sheet, so the content stays visible if GSAP fails to load. */
+
+/* ------------------------------------------------------------ intro */
+
+/* The markup lives inside the theme's #preloader so it covers the very first
+   paint. motion.js keeps the overlay up past the theme's fadeOut and lifts it
+   as a curtain instead. */
+#preloader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+#preloader .intro-curve {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 100%;
+    height: 14vh;
+    margin-top: -1px;
+    background: #fff;
+    border-radius: 0 0 50% 50%;
+}
+
+.intro-inner {
+    text-align: center;
+}
+
+.intro-name {
+    font-family: var(--title-font);
+    font-size: clamp(34px, 7vw, 84px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: #202020;
+    /* Revealed by motion.js once the letters are split and parked below
+       their mask; the no-motion path reveals it straight away. */
+    visibility: hidden;
+}
+
+.intro-name .intro-accent {
+    color: var(--primary-color);
+}
+
+.intro-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    /* Room for descenders inside the mask. */
+    padding-bottom: .12em;
+    margin-bottom: -.12em;
+}
+
+.intro-char {
+    display: inline-block;
+    white-space: pre;
+}
+
+.intro-bar {
+    width: 140px;
+    height: 2px;
+    margin: 22px auto 0;
+    background: rgba(var(--primary-color-rgb), .18);
+    overflow: hidden;
+}
+
+.intro-bar span {
+    display: block;
+    height: 100%;
+    background: var(--primary-color);
+    transform-origin: left center;
+}
+
+/* Set by motion.js on whatever GSAP is animating, so theme transitions
+   don't smear its frames. */
+.m-busy {
+    transition: none !important;
+}
+
+/* The buttons GSAP pulls around magnetically keep only their colour
+   transitions; the theme's `transition: all` would lag every frame. */
+.hero-cta .btn-main,
+#playVideoLink,
+#gallery-more-btn {
+    transition: color .3s, background-color .3s, box-shadow .4s !important;
+}
+
+/* --------------------------------------------------- split-text masks */
+
+.m-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: .14em;
+    margin-bottom: -.14em;
+}
+
+.m-word {
+    display: inline-block;
+}
+
+/* ------------------------------------------------------ scroll progress */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10001;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), #e8b4a0);
+    transform: scaleX(0);
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+/* ------------------------------------------------------ cursor follower */
+
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1.5px solid rgba(var(--primary-color-rgb), .7);
+    border-radius: 50%;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0;
+    opacity: 0;
+    transition: width .35s cubic-bezier(.2, .8, .2, 1), height .35s cubic-bezier(.2, .8, .2, 1),
+        margin .35s cubic-bezier(.2, .8, .2, 1), background-color .35s, border-color .35s,
+        font-size .25s, opacity .3s;
+}
+
+.cursor-ring.is-visible {
+    opacity: 1;
+}
+
+.cursor-ring.is-hover {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    background-color: rgba(var(--primary-color-rgb), .12);
+    border-color: rgba(var(--primary-color-rgb), .35);
+}
+
+.cursor-ring.is-view {
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    background-color: rgba(var(--primary-color-rgb), .92);
+    border-color: transparent;
+    font-size: 22px;
+}
+
+.cursor-ring.is-down {
+    width: 26px;
+    height: 26px;
+    margin: -13px 0 0 -13px;
+}
+
+/* ----------------------------------------------------------- buttons */
+
+/* A sheen that sweeps across the primary buttons on hover. */
+.btn-main {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.btn-main::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    z-index: -1;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(110deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .45), rgba(255, 255, 255, 0));
+    transform: skewX(-20deg);
+    transition: left .75s cubic-bezier(.2, .8, .2, 1);
+    pointer-events: none;
+}
+
+.btn-main:hover::after {
+    left: 140%;
+}
+
+/* A soft sonar ping so the one button that reveals the video is found. */
+#playVideoLink {
+    display: inline-block;
+    animation: play-ping 2.4s cubic-bezier(.2, .8, .2, 1) infinite;
+}
+
+@keyframes play-ping {
+    0% {
+        box-shadow: 0 10px 25px rgba(var(--primary-color-rgb), .4), 0 0 0 0 rgba(var(--primary-color-rgb), .45);
+    }
+
+    70%,
+    100% {
+        box-shadow: 0 10px 25px rgba(var(--primary-color-rgb), .4), 0 0 0 22px rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+#playVideoLink .fa {
+    transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+}
+
+#playVideoLink:hover .fa {
+    transform: scale(1.25) rotate(-8deg);
+}
+
+/* The revealed video pops up like a story opening. */
+#video-content-area.is-revealed video {
+    animation: video-in .9s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes video-in {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(.86) rotate(-3deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------------- hero */
+
+/* The scroll parallax transforms the copy column, which makes it a stacking
+   context and traps the CTA's own z-index under the hero's bottom fade. */
+#hero .col-md-5 {
+    position: relative;
+    z-index: 2;
+}
+
+/* Its own stacking context, so the portrait (z-index 2 inside) still sits
+   under the hero's bottom fade (z-index 1) whether or not a transform is
+   applied. */
+.hero-visual {
+    position: relative;
+    z-index: 0;
+}
+
+/* ...and the fade is decoration only, so the follow chip under it still
+   takes clicks. */
+#hero .de-gradient-edge-bottom {
+    pointer-events: none;
+}
+
+.hero-visual>img {
+    position: relative;
+    z-index: 2;
+    display: block;
+}
+
+/* A warm glow that slowly morphs behind the portrait. */
+.hero-blob {
+    position: absolute;
+    z-index: 0;
+    left: 16%;
+    top: 4%;
+    width: 68%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 35% 35%, rgba(var(--primary-color-rgb), .55), rgba(232, 180, 160, .28) 55%, rgba(var(--primary-color-rgb), 0) 72%);
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    animation: blob-morph 14s ease-in-out infinite alternate;
+}
+
+@keyframes blob-morph {
+    0% {
+        border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    }
+
+    50% {
+        border-radius: 63% 37% 45% 55% / 55% 62% 38% 45%;
+    }
+
+    100% {
+        border-radius: 38% 62% 36% 64% / 62% 38% 62% 38%;
+    }
+}
+
+/* A fine dotted ring around the face, slowly drifting. */
+.hero-ring {
+    position: absolute;
+    z-index: 1;
+    left: 23%;
+    top: -3%;
+    width: 54%;
+    aspect-ratio: 1;
+    pointer-events: none;
+}
+
+.hero-ring svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.hero-ring circle {
+    fill: none;
+    stroke-linecap: round;
+}
+
+.hero-ring .ring-dash {
+    stroke-width: 1.5;
+    stroke-dasharray: 2 10;
+    opacity: .6;
+    transform-origin: 50% 50%;
+    animation: ring-spin 40s linear infinite;
+}
+
+@keyframes ring-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Floating social chips. Three layers so each transform has one owner:
+   .hero-chip (placement + mouse parallax), .chip-float (idle bobbing) and
+   .chip-body (the entrance pop). */
+.hero-chip {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.chip-body {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 12px 30px rgba(32, 32, 32, .12), 0 2px 6px rgba(32, 32, 32, .06);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: #202020;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.chip-body.is-round {
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+/* Analytics: a mini bar chart whose bars keep growing, for the
+   strategy-and-results side of the job. */
+.chip-stats {
+    top: 13%;
+    right: 1%;
+}
+
+.chip-stats .fa {
+    color: var(--primary-color);
+}
+
+.mini-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+}
+
+.mini-bars i {
+    width: 5px;
+    height: 100%;
+    border-radius: 2px;
+    background: rgba(var(--primary-color-rgb), .35);
+    transform-origin: bottom center;
+    animation: bar-grow 2.8s cubic-bezier(.2, .8, .2, 1) infinite;
+}
+
+.mini-bars i:nth-child(1) {
+    --h: .35;
+}
+
+.mini-bars i:nth-child(2) {
+    --h: .55;
+    animation-delay: .12s;
+}
+
+.mini-bars i:nth-child(3) {
+    --h: .75;
+    animation-delay: .24s;
+}
+
+.mini-bars i:nth-child(4) {
+    --h: 1;
+    background: var(--primary-color);
+    animation-delay: .36s;
+}
+
+@keyframes bar-grow {
+    0% {
+        transform: scaleY(.15);
+    }
+
+    35%,
+    85% {
+        transform: scaleY(var(--h));
+    }
+
+    100% {
+        transform: scaleY(.15);
+    }
+}
+
+.chip-comment {
+    top: 34%;
+    left: -2%;
+}
+
+.chip-comment .fa {
+    color: var(--primary-color);
+}
+
+.typing {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #b0b0b0;
+    animation: typing-dot 1.2s ease-in-out infinite;
+}
+
+.typing i:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.typing i:nth-child(3) {
+    animation-delay: .3s;
+}
+
+@keyframes typing-dot {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: .5;
+    }
+
+    30% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+.chip-follow {
+    bottom: 26%;
+    left: 8%;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.chip-follow .chip-body {
+    width: 58px;
+    height: 58px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 24px;
+}
+
+.chip-bell {
+    top: 47%;
+    right: -1%;
+}
+
+.chip-bell .fa {
+    position: relative;
+    color: #202020;
+}
+
+.chip-bell .badge-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #ff3b5c;
+    animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.35);
+    }
+}
+
+.chip-bell .chip-line {
+    display: block;
+    width: 54px;
+    height: 6px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, rgba(var(--primary-color-rgb), .55), rgba(var(--primary-color-rgb), .15));
+}
+
+.chip-play {
+    top: 4%;
+    left: 12%;
+}
+
+.chip-play .chip-body {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+/* New-follower icons rising from the follow chip: the community growing. */
+.hero-follows {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.hero-follow {
+    position: absolute;
+    left: -10px;
+    top: -10px;
+    font-size: 20px;
+    will-change: transform, opacity;
+}
+
+@media only screen and (max-width: 991px) {
+    .chip-body {
+        padding: 8px 11px;
+        font-size: 15px;
+    }
+
+    .chip-body.is-round {
+        width: 40px;
+        height: 40px;
+    }
+
+    .chip-follow .chip-body {
+        width: 46px;
+        height: 46px;
+        font-size: 19px;
+    }
+
+    .mini-bars {
+        height: 16px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    /* The theme's fade is 30% of the hero's height. Stacked, the hero is so
+       tall that this covers the whole portrait; just soften its bottom. */
+    #hero .de-gradient-edge-bottom {
+        height: 70px;
+    }
+
+    /* The portrait sits under the copy here; keep the busiest chips. */
+    .chip-play,
+    .chip-bell {
+        display: none;
+    }
+
+    .chip-comment {
+        left: 2%;
+    }
+}
+
+/* -------------------------------------------------------- services */
+
+/* A light that follows the pointer inside each card, and an accent rule
+   that runs down the card's left edge on hover. */
+.de_3d-box {
+    overflow: hidden;
+    transition: background-color .4s;
+}
+
+.de_3d-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--primary-color-rgb), .13), rgba(var(--primary-color-rgb), 0) 70%);
+    opacity: 0;
+    transition: opacity .45s;
+    pointer-events: none;
+}
+
+.de_3d-box::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--primary-color);
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+}
+
+.de_3d-box:hover::before {
+    opacity: 1;
+}
+
+.de_3d-box:hover::after {
+    transform: scaleY(1);
+}
+
+.de_3d-box:hover i {
+    animation: icon-hop .7s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes icon-hop {
+    0% {
+        transform: none;
+    }
+
+    35% {
+        transform: translateY(-8px) rotate(-10deg) scale(1.12);
+    }
+
+    65% {
+        transform: translateY(2px) rotate(4deg);
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+/* ------------------------------------------------------- portfolio */
+
+/* An Instagram badge that pops into the corner of the hovered card. */
+#section-portfolio .card-image-1.mod-d::after {
+    content: "\f16d";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .92);
+    color: var(--primary-color);
+    font-family: FontAwesome;
+    font-size: 19px;
+    opacity: 0;
+    transform: scale(.4) rotate(-30deg);
+    transition: opacity .3s, transform .5s cubic-bezier(.34, 1.56, .64, 1);
+    pointer-events: none;
+}
+
+#section-portfolio .card-image-1.mod-d:hover::after {
+    opacity: 1;
+    transform: none;
+}
+
+#section-portfolio .card-image-1 img {
+    transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* --------------------------------------------------------- timeline */
+
+.tl-progress {
+    position: absolute;
+    left: 22px;
+    top: 20px;
+    width: 2px;
+    margin-left: -1px;
+    background: linear-gradient(var(--primary-color), rgba(var(--primary-color-rgb), .6));
+    transform: scaleY(0);
+    transform-origin: top center;
+    pointer-events: none;
+}
+
+/* ------------------------------------------------------------ about */
+
+#section-about .d-skills-bar .item>div {
+    transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s, border-color .45s;
+}
+
+#section-about .d-skills-bar .item>div:hover {
+    transform: translateY(-6px) rotate(-1.5deg);
+    border-color: rgba(var(--primary-color-rgb), .45) !important;
+    box-shadow: 0 16px 30px rgba(var(--primary-color-rgb), .18) !important;
+}
+
+#section-about .d-skills-bar .item:nth-child(even)>div:hover {
+    transform: translateY(-6px) rotate(1.5deg);
+}
+
+.about-photo {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* ---------------------------------------------------------- marquee */
+
+#section-marquee {
+    position: relative;
+    padding: 70px 0 40px;
+    overflow: hidden;
+}
+
+.marquee {
+    position: relative;
+    left: -5%;
+    width: 110%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+}
+
+.marquee-group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+.marquee-group span,
+.marquee-group b {
+    font-family: var(--title-font);
+    font-size: clamp(26px, 4.4vw, 58px);
+    font-weight: 700;
+    line-height: 1.25;
+    text-transform: uppercase;
+    letter-spacing: -.5px;
+}
+
+.marquee-group b {
+    margin: 0 .55em;
+    font-size: clamp(18px, 2.6vw, 34px);
+}
+
+.marquee--solid {
+    z-index: 2;
+    padding: 14px 0;
+    background: var(--primary-color);
+    color: #fff;
+    transform: rotate(-2.5deg);
+    box-shadow: 0 18px 40px rgba(var(--primary-color-rgb), .3);
+}
+
+.marquee--outline {
+    z-index: 1;
+    margin-top: -64px;
+    padding: 14px 0;
+    background: #fbf1ef;
+    transform: rotate(2deg);
+}
+
+.marquee--outline span {
+    color: transparent;
+    -webkit-text-stroke: 1.2px rgba(var(--primary-color-rgb), .75);
+}
+
+.marquee--outline b {
+    color: rgba(var(--primary-color-rgb), .6);
+}
+
+@media only screen and (max-width: 767px) {
+    #section-marquee {
+        padding: 50px 0 20px;
+    }
+
+    .marquee--outline {
+        margin-top: -44px;
+    }
+}
+
+/* ---------------------------------------------------------- contact */
+
+#section-contact .col-md-4 a .fa {
+    display: inline-block;
+    transition: transform .45s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+#section-contact .col-md-4 a:hover .fa {
+    transform: scale(1.3) rotate(-12deg);
+}
+
+.float-text .de_social-icons a {
+    display: inline-block;
+    transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.float-text .de_social-icons a:hover {
+    transform: translateX(4px) scale(1.2);
+}
+
+/* --------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .hero-blob,
+    .hero-ring .ring-dash,
+    .typing i,
+    .chip-bell .badge-dot,
+    .mini-bars i,
+    #playVideoLink,
+    #video-content-area.is-revealed video,
+    .de_3d-box:hover i {
+        animation: none;
+    }
+
+    .btn-main::after {
+        display: none;
+    }
+
+    .mini-bars i {
+        transform: scaleY(var(--h));
+    }
+}

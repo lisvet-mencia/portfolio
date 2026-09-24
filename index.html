@@ -48,6 +48,15 @@
             top: 60px;
         }
 
+        /* On desktop the bar's height is just the menu links' 30px of
+           vertical padding; trimmed from ~90px to ~66px. */
+        @media only screen and (min-width: 993px) {
+            #mainmenu>li>a {
+                padding-top: 18px;
+                padding-bottom: 18px;
+            }
+        }
+
         .hero-cta {
             margin-top: 3rem;
         }
@@ -77,14 +86,19 @@
 
         @media only screen and (max-width: 767px) {
 
-            /* Sit the hero just under the shortened bar instead of clearing
-               the old 90px header plus the container's 3rem margin. */
+            /* The content already starts below the 60px bar here, so the
+               hero only needs a little breathing room, not padding that
+               clears the bar again (nor the container's 3rem margin). */
             #hero {
-                padding-top: 75px;
+                padding-top: 25px;
             }
 
             #hero .container {
                 margin-top: 0 !important;
+            }
+
+            #hero .col-md-5>.spacer-10:first-child {
+                display: none;
             }
 
             .hero-cta {
@@ -310,6 +324,7 @@
         }
     </style>
     <link href="css/coloring.css" rel="stylesheet" type="text/css" />
+    <link href="css/motion.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="onepage">
@@ -373,8 +388,13 @@
             <div id="top"></div>
 
             <!-- page preloader begin -->
-            <div id="preloader">
-                <div class="preloader1"></div>
+            <div id="preloader" aria-hidden="true">
+                <div class="intro-inner">
+                    <div class="intro-name"><span data-intro-word>Lisvet</span> <span class="intro-accent"
+                            data-intro-word>Mencia</span></div>
+                    <div class="intro-bar"><span></span></div>
+                </div>
+                <div class="intro-curve"></div>
             </div>
             <!-- page preloader close -->
 
@@ -458,9 +478,41 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-6 offset-md-1 jarallax">
-                            <img src="images/misc/rosalia1.png" class="img-fluid wow fadeInUp" data-wow-delay=".8s"
-                                alt="">
+                        <div class="col-md-6 offset-md-1">
+                            <!-- Decorative social scene around the portrait, animated by js/motion.js.
+                                 data-depth sets each layer's pointer parallax. -->
+                            <div class="hero-visual">
+                                <div class="hero-blob" data-depth="0.15"></div>
+                                <div class="hero-ring" data-depth="0.25" aria-hidden="true">
+                                    <svg viewBox="0 0 200 200">
+                                        <circle class="ring-dash" cx="100" cy="100" r="88" stroke="#CB7C6F" />
+                                    </svg>
+                                </div>
+                                <img src="images/misc/rosalia1.png" class="img-fluid" alt="">
+                                <div class="hero-chip chip-play" data-depth="0.6" aria-hidden="true">
+                                    <div class="chip-float"><div class="chip-body"><i class="fa fa-play"></i><i
+                                                class="fa fa-camera"></i></div></div>
+                                </div>
+                                <div class="hero-chip chip-stats" data-depth="0.9" aria-hidden="true">
+                                    <div class="chip-float"><div class="chip-body"><i class="fa fa-line-chart"></i><span
+                                                class="mini-bars"><i></i><i></i><i></i><i></i></span></div></div>
+                                </div>
+                                <div class="hero-chip chip-comment" data-depth="0.7" aria-hidden="true">
+                                    <div class="chip-float"><div class="chip-body"><i class="fa fa-comment"></i><span
+                                                class="typing"><i></i><i></i><i></i></span></div></div>
+                                </div>
+                                <div class="hero-chip chip-bell" data-depth="0.5" aria-hidden="true">
+                                    <div class="chip-float"><div class="chip-body"><i class="fa fa-bell"><span
+                                                    class="badge-dot"></span></i><span class="chip-line"></span></div>
+                                    </div>
+                                </div>
+                                <div class="hero-chip chip-follow" data-depth="1" aria-hidden="true">
+                                    <div class="chip-float">
+                                        <div class="chip-body is-round"><i class="fa fa-user-plus"></i></div>
+                                        <div class="hero-follows"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -580,8 +632,9 @@
                         // Hide the button and text smoothly
                         triggerArea.style.display = 'none';
 
-                        // Show the video container
+                        // Show the video container; css/motion.css pops it in
                         videoArea.style.display = 'flex';
+                        videoArea.classList.add('is-revealed');
 
                         // Play the video
                         videoPlayer.play();
@@ -880,7 +933,9 @@
                 <div class="container relative">
                     <div class="row align-items-center">
                         <div class="col-md-6 wow fadeInUp">
-                            <img src="images/misc/perfil8.jpeg" class="img-fluid" alt="">
+                            <div class="about-photo">
+                                <img src="images/misc/perfil8.jpeg" class="img-fluid" alt="">
+                            </div>
                         </div>
                         <div class="col-md-6 wow fadeInUp" data-wow-delay=".2s">
                             <h2 data-i18n="about.heading">À propos de moi</h2>
@@ -945,6 +1000,33 @@
                                         </div>
                                     </div>
                                 </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Two crossing ribbons of keywords; js/motion.js clones the groups
+                 into a seamless loop and ties their speed to the scroll. -->
+            <section id="section-marquee" aria-label="section">
+                <div class="marquee marquee--outline" aria-hidden="true">
+                    <div class="marquee-track">
+                        <div class="marquee-group">
+                            <span data-i18n="marquee.4">Réseaux sociaux</span><b>✦</b>
+                            <span data-i18n="marquee.3">Storytelling</span><b>✦</b>
+                            <span data-i18n="marquee.5">Stratégie digitale</span><b>✦</b>
+                            <span data-i18n="marquee.1">Création de contenu</span><b>✦</b>
+                            <span data-i18n="marquee.2">Community management</span><b>✦</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="marquee marquee--solid">
+                    <div class="marquee-track">
+                        <div class="marquee-group">
+                            <span data-i18n="marquee.1">Création de contenu</span><b>✦</b>
+                            <span data-i18n="marquee.2">Community management</span><b>✦</b>
+                            <span data-i18n="marquee.3">Storytelling</span><b>✦</b>
+                            <span data-i18n="marquee.4">Réseaux sociaux</span><b>✦</b>
+                            <span data-i18n="marquee.5">Stratégie digitale</span><b>✦</b>
                         </div>
                     </div>
                 </div>
@@ -1346,6 +1428,11 @@
          boot the theme and while #preloader covers the page, so untranslated
          copy is never painted. -->
     <script src="js/i18n.js"></script>
+    <!-- Takes over the theme's WOW.js reveals, so it must run before
+         window.load, where designesia.js starts WOW. -->
+    <script src="gsap/gsap.min.js"></script>
+    <script src="gsap/ScrollTrigger.min.js"></script>
+    <script src="js/motion.js"></script>
 </body>
 
 </html>

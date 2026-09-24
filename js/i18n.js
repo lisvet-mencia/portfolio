@@ -86,6 +86,12 @@
             "contact.email": "E-mail",
             "contact.profile": "Mon profil",
 
+            "marquee.1": "Création de contenu",
+            "marquee.2": "Community management",
+            "marquee.3": "Storytelling",
+            "marquee.4": "Réseaux sociaux",
+            "marquee.5": "Stratégie digitale",
+
             "modal.close": "Fermer",
             "modal.title": "Programme d'études : Licence en Marketing",
             "modal.tab.marketing": "Spécialisation (Marketing)",
@@ -211,6 +217,12 @@
             "contact.email": "Email",
             "contact.profile": "My profile",
 
+            "marquee.1": "Content creation",
+            "marquee.2": "Community management",
+            "marquee.3": "Storytelling",
+            "marquee.4": "Social media",
+            "marquee.5": "Digital strategy",
+
             "modal.close": "Close",
             "modal.title": "Curriculum: Bachelor's Degree in Marketing",
             "modal.tab.marketing": "Major (Marketing)",
@@ -335,6 +347,12 @@
             "contact.heading": "Contáctame",
             "contact.email": "Correo",
             "contact.profile": "Mi Perfil",
+
+            "marquee.1": "Creación de contenido",
+            "marquee.2": "Gestión de comunidades",
+            "marquee.3": "Storytelling",
+            "marquee.4": "Redes sociales",
+            "marquee.5": "Estrategia digital",
 
             "modal.close": "Cerrar",
             "modal.title": "Plan de Estudios: Licenciatura en Mercadeo",
